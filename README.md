@@ -4,6 +4,7 @@
 
 - Bundler: Vite
 - Js Library: React
+- 3d render: R3F
 
 ## Ressources
 
