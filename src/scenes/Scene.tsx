@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react"
 
 import Environment from "../components/Environment"
 import Column from "../components/Column"
+import PlatformGroup from "../components/PlatformGroup"
 
 function Scene() {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null)
@@ -31,6 +32,7 @@ function Scene() {
 
       <Environment />
       <Column />
+      <PlatformGroup />
     </>
   )
 }

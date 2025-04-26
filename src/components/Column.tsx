@@ -3,7 +3,7 @@ import { GameOptions } from "../stores/game"
 function Column() {
   return (
     <group>
-      <mesh>
+      <mesh receiveShadow>
         <cylinderGeometry
           args={[GameOptions.columnRadius, GameOptions.columnRadius, 50]}
         />
