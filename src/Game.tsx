@@ -1,5 +1,13 @@
+import { Canvas } from "@react-three/fiber"
+
+import Scene from "./scenes/Scene"
+
 function Game() {
-  return <div className="game">Helix Jump React</div>
+  return (
+    <Canvas>
+      <Scene />
+    </Canvas>
+  )
 }
 
 export default Game
