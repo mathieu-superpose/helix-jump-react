@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#root {
+  width: 100%;
+}
