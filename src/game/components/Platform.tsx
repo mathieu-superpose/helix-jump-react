@@ -1,7 +1,9 @@
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { GameOptions as G } from "../../stores/game"
 
 import * as THREE from "three"
+
+import { state } from "../../stores/platform"
 
 function Platform({
   color,
@@ -14,15 +16,31 @@ function Platform({
   angle: number
   posY: number
 }) {
+  const platformRef = useRef<THREE.Mesh | null>(null!)
+
   const material = useMemo(() => {
     return new THREE.MeshStandardMaterial({
       color: color,
     })
   }, [])
 
+  useEffect(() => {
+    if (!platformRef?.current) {
+      return
+    }
+
+    state.platformsRefs.push(platformRef)
+  }, [])
+
   return (
     <group rotation={[0, angle, 0]} position={[0, posY, 0]}>
-      <mesh castShadow receiveShadow material={material}>
+      <mesh
+        ref={platformRef}
+        castShadow
+        receiveShadow
+        material={material}
+        name="platform"
+      >
         <cylinderGeometry
           args={[
             G.platformRadius,
@@ -53,10 +71,9 @@ function Platform({
         castShadow
         receiveShadow
         material={material}
-        position-x={Math.sin(thetaLength) * G.platformRadius / 2}
-        position-z={Math.cos(thetaLength) * G.platformRadius / 2}
-        rotation-y={thetaLength - 3 * Math.PI / 2}
-        
+        position-x={(Math.sin(thetaLength) * G.platformRadius) / 2}
+        position-z={(Math.cos(thetaLength) * G.platformRadius) / 2}
+        rotation-y={thetaLength - (3 * Math.PI) / 2}
       >
         <planeGeometry args={[G.platformRadius, G.platformHeight]} />
       </mesh>

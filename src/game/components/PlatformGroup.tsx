@@ -10,6 +10,10 @@ import useTimedKeyPress from "../../hooks/useTimedKeyPress"
 import * as THREE from "three"
 import { useFrame } from "@react-three/fiber"
 
+import { state } from "../../stores/ball"
+
+const FALL_SPEED = 15
+
 function PlatformGroup() {
   const platformGroupRef = useRef<THREE.Group>(null)
   const platforms = useMemo(() => {
@@ -47,6 +51,10 @@ function PlatformGroup() {
 
     platformGroupRef.current.rotation.y +=
       rotateDirection * G.rotationSpeed * delta
+
+    if (state.action === "collides") {
+      platformGroupRef.current.position.y += FALL_SPEED * delta
+    }
   })
 
   return (
