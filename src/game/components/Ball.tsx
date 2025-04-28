@@ -9,11 +9,12 @@ function Ball() {
   useBallAnimation(ballRef)
 
   return (
-    <mesh ref={ballRef} position={[0, 12
-    , 2]} scale={0.5}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="orange" />
-    </mesh>
+    <group position={[0, 1, 0]}>
+      <mesh ref={ballRef} position={[0, 12, 2]} scale={0.5}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="orange" />
+      </mesh>
+    </group>
   )
 }
 
