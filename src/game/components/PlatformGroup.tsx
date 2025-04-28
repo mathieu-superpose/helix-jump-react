@@ -1,11 +1,11 @@
 import { useMemo, useRef } from "react"
 
-import { GameOptions as G } from "../stores/game"
-import { newPlatformData } from "../utils/game"
+import { GameOptions as G } from "../../stores/game"
+import { newPlatformData } from "../../utils/game"
 
 import Platform from "./Platform"
 
-import useTimedKeyPress from "../hooks/useTimedKeyPress"
+import useTimedKeyPress from "../../hooks/useTimedKeyPress"
 
 import * as THREE from "three"
 import { useFrame } from "@react-three/fiber"

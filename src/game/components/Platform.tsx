@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { GameOptions as G } from "../stores/game"
+import { GameOptions as G } from "../../stores/game"
 
 import * as THREE from "three"
 

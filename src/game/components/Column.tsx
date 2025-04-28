@@ -1,4 +1,4 @@
-import { GameOptions } from "../stores/game"
+import { GameOptions } from "../../stores/game"
 
 function Column() {
   return (
