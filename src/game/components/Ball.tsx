@@ -1,11 +1,16 @@
 import { useRef } from "react"
 import * as THREE from "three"
 
+import { useBallAnimation } from "../../hooks/useBallAnimation"
+
 function Ball() {
   const ballRef = useRef<THREE.Mesh>(null!)
 
+  useBallAnimation(ballRef)
+
   return (
-    <mesh ref={ballRef} position={[0, 5, 2]} scale={0.5}>
+    <mesh ref={ballRef} position={[0, 12
+    , 2]} scale={0.5}>
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial color="orange" />
     </mesh>
