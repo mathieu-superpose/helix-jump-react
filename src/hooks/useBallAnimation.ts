@@ -43,7 +43,7 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
       y = Math.abs(Math.sin(progress * Math.PI)) * MAX_HEIGHT
     }
 
-    if (y < 0.15) {
+    if (y < 0.14) {
       y = 0
 
       castOrigin.set(ball.position.x, ball.position.y, ball.position.z)
