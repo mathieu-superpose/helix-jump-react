@@ -52,13 +52,13 @@ function PlatformGroup() {
     platformGroupRef.current.rotation.y +=
       rotateDirection * G.rotationSpeed * delta
 
-    if (state.action === "collides") {
+    if (state.action === "willCollide") {
       platformGroupRef.current.position.y += FALL_SPEED * delta
     }
   })
 
   return (
-    <group ref={platformGroupRef}>
+    <group ref={platformGroupRef} position={[0, -5, 0]}>
       {platforms.map((platform, index) => (
         <Platform
           key={index}

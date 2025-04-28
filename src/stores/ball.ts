@@ -1,5 +1,5 @@
 type TBallState = {
-  action: "fall" | "bounce" | "collides"
+  action: "fall" | "bounce" | "willCollide"
 }
 
 export let state: TBallState = {
