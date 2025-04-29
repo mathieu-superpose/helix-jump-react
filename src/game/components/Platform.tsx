@@ -19,9 +19,13 @@ function Platform({
   const platformRef = useRef<THREE.Mesh | null>(null!)
 
   const material = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
+    const material = new THREE.MeshStandardMaterial({
       color: color,
     })
+
+    material.transparent = true
+
+    return material
   }, [])
 
   useEffect(() => {
