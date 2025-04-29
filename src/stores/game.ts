@@ -19,10 +19,13 @@ export const GameOptions = {
 // import useMapStore from "./map"
 // import { reset as resetPlayerStore } from "./player"
 
-import { IGameStore } from "../types/gameTypes"
+import { IGameStore, TStatus } from "../types/gameTypes"
 
-const useGameStore = create<IGameStore>(() => ({
+const useGameStore = create<IGameStore>((set) => ({
   status: "checkins",
+  setStatus: (status: TStatus) => {
+    set({ status })
+  },
   // score: 0,
   // boundMargin: 5,
   // setBoundMargin: (margin) => {

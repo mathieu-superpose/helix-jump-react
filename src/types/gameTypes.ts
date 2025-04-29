@@ -1,3 +1,6 @@
+export type TStatus = "checkins" | "standby" | "running" | "paused" | "gameover"
+
 export interface IGameStore {
-  status: "checkins" | "standby" | "running" | "paused" | "gameover"
+  status: TStatus
+  setStatus: (status: TStatus) => void
 }

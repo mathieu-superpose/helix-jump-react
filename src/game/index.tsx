@@ -3,6 +3,7 @@ import Column from "./components/Column"
 import PlatformGroup from "./components/PlatformGroup"
 import Ball from "./components/Ball"
 
+import UI from "./ui/index.tsx"
 
 import "./Game.css"
 
@@ -14,6 +15,8 @@ function Game() {
         <PlatformGroup />
         <Ball />
       </Scene>
+
+      <UI />
     </div>
   )
 }
