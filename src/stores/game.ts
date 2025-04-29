@@ -10,11 +10,11 @@ export const GameOptions = {
   minThetaLength: Math.PI * 1.5, //      min theta length, minimum radians of the circular sector
   maxThetaLength: Math.PI * 1.85, //     max theta length, maximum radians of the circular sector
   rotationSpeed: 6, //                   helix rotation speed
+  fallSpeed: 15, //                      fall speed
   platformColors: [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0x00ffff, 0xff00ff],
-  bgColor: 0x000000, //             background color
+  bgColor: 0x000000, //                  background color
+  maxBounceHeight: 4, //                 max bounce height
 }
-
-
 
 // import useMapStore from "./map"
 // import { reset as resetPlayerStore } from "./player"

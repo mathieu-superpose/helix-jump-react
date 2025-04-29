@@ -2,13 +2,16 @@ import { RefObject, useMemo } from "react"
 import * as THREE from "three"
 import { useFrame } from "@react-three/fiber"
 
-const MAX_HEIGHT = 4
-const FALL_SPEED = 15
+import { GameOptions as G } from "../stores/game"
+import useGameStore from "../stores/game"
 
 import { state as ballState } from "../stores/ball"
 import { state as platformState } from "../stores/platform"
 
 export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
+  const { fallSpeed, maxBounceHeight } = G
+
+  const status = useGameStore((state) => state.status)
   const moveClock = new THREE.Clock(false)
   const bouceTime = 0.9 // time it takes to do a full bounce
   const castDirection = useMemo(() => new THREE.Vector3(0, -1, 0), [])
@@ -23,6 +26,10 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
   )
 
   useFrame((_state, delta) => {
+    if (status !== "running") {
+      return
+    }
+
     if (!ref?.current) {
       return
     }
@@ -31,7 +38,7 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
     let y = ball.position.y
 
     if (ballState.action === "fall") {
-      y -= FALL_SPEED * delta
+      y -= fallSpeed * delta
       if (y <= 0.1) {
         y = 0
         ballState.action = "willCollide"
@@ -40,7 +47,7 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
 
     if (ballState.action === "bounce") {
       const progress = moveClock.getElapsedTime() / bouceTime
-      y = Math.abs(Math.sin(progress * Math.PI)) * MAX_HEIGHT
+      y = Math.abs(Math.sin(progress * Math.PI)) * maxBounceHeight
     }
 
     if (y < 0.14) {
@@ -60,13 +67,10 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
 
       const intersects = raycaster.intersectObjects(platforms, false)
       if (intersects.length > 0) {
-        // console.log("found ", intersects.length, " platforms")
-
         // check the distance to the platform
         const distance = intersects[0].distance
         if (distance < 0.26) {
           // we are colliding with the platform
-          // console.log("collides with platform")
           ballState.action = "bounce"
           moveClock.start()
           moveClock.elapsedTime = 0

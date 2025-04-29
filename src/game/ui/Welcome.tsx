@@ -9,7 +9,7 @@ function Welcome() {
   }
 
   const handleEnterTestWorld = () => {
-    setGameStatus("standby")
+    setGameStatus("running")
   }
 
   return (

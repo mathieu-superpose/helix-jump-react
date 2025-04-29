@@ -6,14 +6,21 @@ import { GameOptions as G } from "../stores/game"
 
 import useTimedKeyPress from "./useTimedKeyPress.ts"
 
-const FALL_SPEED = 15
+import useGameState from "../stores/game.ts"
 
 import { state as ballState } from "../stores/ball"
 
 export function usePlatformsAnimation(ref: RefObject<THREE.Group | null>) {
+  const { fallSpeed } = G
+  const status = useGameState((state) => state.status)
+
   const { keys } = useTimedKeyPress()
 
   useFrame((_state, delta) => {
+    if (status !== "running") {
+      return
+    }
+
     let rotateDirection: number = 0
 
     if (keys["a"] && !keys["d"]) {
@@ -39,7 +46,7 @@ export function usePlatformsAnimation(ref: RefObject<THREE.Group | null>) {
     platformGroup.rotation.y += rotateDirection * G.rotationSpeed * delta
 
     if (ballState.action === "willCollide") {
-      platformGroup.position.y += FALL_SPEED * delta
+      platformGroup.position.y += fallSpeed * delta
     }
   })
 }
