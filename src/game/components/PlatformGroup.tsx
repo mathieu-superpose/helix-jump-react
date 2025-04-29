@@ -1,14 +1,18 @@
 import { useMemo, useRef } from "react"
 
-import { GameOptions as G } from "../stores/game"
-import { newPlatformData } from "../utils/game"
+import { GameOptions as G } from "../../stores/game"
+import { newPlatformData } from "../../utils/game"
 
 import Platform from "./Platform"
 
-import useTimedKeyPress from "../hooks/useTimedKeyPress"
+import useTimedKeyPress from "../../hooks/useTimedKeyPress"
 
 import * as THREE from "three"
 import { useFrame } from "@react-three/fiber"
+
+import { state } from "../../stores/ball"
+
+const FALL_SPEED = 15
 
 function PlatformGroup() {
   const platformGroupRef = useRef<THREE.Group>(null)
@@ -47,10 +51,14 @@ function PlatformGroup() {
 
     platformGroupRef.current.rotation.y +=
       rotateDirection * G.rotationSpeed * delta
+
+    if (state.action === "willCollide") {
+      platformGroupRef.current.position.y += FALL_SPEED * delta
+    }
   })
 
   return (
-    <group ref={platformGroupRef}>
+    <group ref={platformGroupRef} position={[0, -5, 0]}>
       {platforms.map((platform, index) => (
         <Platform
           key={index}

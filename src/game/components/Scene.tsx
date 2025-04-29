@@ -1,14 +1,11 @@
-import * as THREE from "three"
-
-import { PerspectiveCamera } from "@react-three/drei"
 import { useEffect, useRef } from "react"
+import * as THREE from "three"
+import { Canvas } from "@react-three/fiber"
+import { PerspectiveCamera } from "@react-three/drei"
 
-import Environment from "../components/Environment"
-import Column from "../components/Column"
-import PlatformGroup from "../components/PlatformGroup"
-import Ball from "../components/Ball"
+import Environment from "./Environment"
 
-function Scene() {
+function Scene({ children }: { children: React.ReactNode }) {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null)
 
   useEffect(() => {
@@ -20,22 +17,20 @@ function Scene() {
   }, [cameraRef])
 
   return (
-    <>
+    <Canvas shadows={true} orthographic={true}>
+      <Environment />
       <PerspectiveCamera
         ref={cameraRef}
         makeDefault
-        fov={50}
+        fov={70}
         aspect={window.innerWidth / window.innerHeight}
         near={0.1}
         far={1000}
-        position={[0, 4, 12]}
+        position={[0, 2, 12]}
       />
 
-      <Environment />
-      <Column />
-      <PlatformGroup />
-      <Ball />
-    </>
+      {children}
+    </Canvas>
   )
 }
 
