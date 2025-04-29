@@ -1,3 +1,4 @@
+import * as THREE from "three"
 import { useMemo, useRef } from "react"
 
 import { GameOptions as G } from "../../stores/game"
@@ -5,14 +6,7 @@ import { newPlatformData } from "../../utils/game"
 
 import Platform from "./Platform"
 
-import useTimedKeyPress from "../../hooks/useTimedKeyPress"
-
-import * as THREE from "three"
-import { useFrame } from "@react-three/fiber"
-
-import { state } from "../../stores/ball"
-
-const FALL_SPEED = 15
+import { usePlatformsAnimation } from "../../hooks/usePlatformsAnimation.ts"
 
 function PlatformGroup() {
   const platformGroupRef = useRef<THREE.Group>(null)
@@ -26,36 +20,7 @@ function PlatformGroup() {
     return newPlatforms
   }, [])
 
-  const { keys } = useTimedKeyPress()
-
-  useFrame((_state, delta) => {
-    let rotateDirection: number = 0
-
-    if (keys["a"] && !keys["d"]) {
-      rotateDirection = 1
-    } else {
-      // clockwise
-      if (keys["d"] && !keys["a"]) {
-        rotateDirection = -1
-      } else {
-        // both directions, so we see which one was the latest
-        if (keys["d"] && keys["a"]) {
-          rotateDirection = keys["a"] > keys["d"] ? 1 : -1
-        }
-      }
-    }
-
-    if (!platformGroupRef?.current) {
-      return
-    }
-
-    platformGroupRef.current.rotation.y +=
-      rotateDirection * G.rotationSpeed * delta
-
-    if (state.action === "willCollide") {
-      platformGroupRef.current.position.y += FALL_SPEED * delta
-    }
-  })
+  usePlatformsAnimation(platformGroupRef)
 
   return (
     <group ref={platformGroupRef} position={[0, -5, 0]}>
