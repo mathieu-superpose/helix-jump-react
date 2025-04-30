@@ -1,4 +1,4 @@
-import { RefObject, use, useMemo } from "react"
+import { RefObject } from "react"
 import * as THREE from "three"
 import { useFrame } from "@react-three/fiber"
 
@@ -10,11 +10,7 @@ import useGameState from "../stores/game.ts"
 
 import { state as ballState } from "../stores/ball"
 
-import { state as platformState } from "../stores/platform"
-
 export function usePlatformsAnimation(ref: RefObject<THREE.Group | null>) {
-  const worldPosition = useMemo(() => new THREE.Vector3(), [])
-
   const { fallSpeed } = G
   const status = useGameState((state) => state.status)
 

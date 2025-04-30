@@ -6,7 +6,7 @@ import { GameOptions as G } from "../stores/game"
 import useGameStore from "../stores/game"
 
 import { state as ballState } from "../stores/ball"
-import { state as platformState } from "../stores/platform"
+import { state as platformState, state } from "../stores/platform"
 
 export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
   const { fallSpeed, maxBounceHeight } = G
@@ -24,6 +24,8 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
       ),
     [ref]
   )
+
+  const wp = useMemo(() => new THREE.Vector3(), [])
 
   useFrame((_state, delta) => {
     if (status !== "running") {
@@ -58,9 +60,21 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
       // cast a ray to see if we are colliding with the platform
       const raycaster = new THREE.Raycaster(castOrigin, castDirection, 0, 1)
 
-      const platforms = platformState.platformsRefs.reduce((acc, ref) => {
+      const platforms = platformState.platformsRefs.reduce((acc, ref, i) => {
         if (ref.current) {
-          acc.push(ref.current)
+          ref.current.getWorldPosition(wp)
+
+          // filter passed platforms
+          if (wp.y > 0) {
+            // update platform color
+            if (ref.current.material instanceof THREE.MeshStandardMaterial) {
+              ref.current.material.color.set(0x00ff00)
+            }
+            // remove the platform from the list to check
+            state.platformsRefs[i].current = null
+          } else {
+            acc.push(ref.current)
+          }
         }
         return acc
       }, [] as THREE.Mesh[])
