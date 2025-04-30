@@ -5,6 +5,8 @@ import { PerspectiveCamera } from "@react-three/drei"
 
 import Environment from "./Environment"
 
+import { OrbitControls } from "@react-three/drei"
+
 function Scene({ children }: { children: React.ReactNode }) {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null)
 
@@ -30,6 +32,8 @@ function Scene({ children }: { children: React.ReactNode }) {
       />
 
       {children}
+
+      <OrbitControls />
     </Canvas>
   )
 }
