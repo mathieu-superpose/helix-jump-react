@@ -52,27 +52,5 @@ export function usePlatformsAnimation(ref: RefObject<THREE.Group | null>) {
     if (ballState.action === "willCollide") {
       platformGroup.position.y += fallSpeed * delta
     }
-
-    // update opacity on passed platforms
-    for (let i = 0; i < platformState.platformsRefs.length; i++) {
-      const platformRef = platformState.platformsRefs[i]
-
-      if (platformRef.current) {
-        const platform = platformRef.current as THREE.Mesh
-
-        // get the position of the mesh in the world
-        platform.getWorldPosition(worldPosition)
-        const platformPosY = worldPosition.y
-
-        if (platformPosY > 0) {
-          // update opacity
-          if (platform.material instanceof THREE.MeshStandardMaterial) {
-            const material = platform.material as THREE.MeshStandardMaterial
-            const opacity = Math.max(1 - platformPosY / 2)
-            material.opacity = opacity
-          }
-        }
-      }
-    }
   })
 }
