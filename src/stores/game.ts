@@ -26,6 +26,11 @@ const useGameStore = create<IGameStore>((set) => ({
   setStatus: (status: TStatus) => {
     set({ status })
   },
+  score: 0,
+  increaseScore: (increase: number) => {
+    set((state) => ({ score: state.score + increase }))
+  },
+
   // score: 0,
   // boundMargin: 5,
   // setBoundMargin: (margin) => {

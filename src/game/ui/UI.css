@@ -19,3 +19,11 @@
     background-color: #007bff;
   }
 }
+
+.score {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+
+  color: #fff;
+}

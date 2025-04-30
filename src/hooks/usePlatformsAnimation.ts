@@ -12,6 +12,7 @@ import { state as ballState } from "../stores/ball"
 
 export function usePlatformsAnimation(ref: RefObject<THREE.Group | null>) {
   const { fallSpeed } = G
+
   const status = useGameState((state) => state.status)
 
   const { keys } = useTimedKeyPress()

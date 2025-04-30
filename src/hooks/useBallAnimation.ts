@@ -12,6 +12,8 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
   const { fallSpeed, maxBounceHeight } = G
 
   const status = useGameStore((state) => state.status)
+  const increaseScore = useGameStore((state) => state.increaseScore)
+
   const moveClock = new THREE.Clock(false)
   const bouceTime = 0.9 // time it takes to do a full bounce
   const castDirection = useMemo(() => new THREE.Vector3(0, -1, 0), [])
@@ -69,6 +71,7 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
             // update platform color
             if (ref.current.material instanceof THREE.MeshStandardMaterial) {
               ref.current.material.color.set(0x00ff00)
+              increaseScore(2)
             }
             // remove the platform from the list to check
             state.platformsRefs[i].current = null
@@ -88,6 +91,7 @@ export function useBallAnimation(ref: RefObject<THREE.Mesh | null>) {
           ballState.action = "bounce"
           moveClock.start()
           moveClock.elapsedTime = 0
+          increaseScore(-1)
         }
       } else {
         // we are not colliding with the platform
